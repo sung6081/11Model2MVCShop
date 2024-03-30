@@ -5,9 +5,9 @@
 
 	<script type="text/javascript">
 		
-	function history(){
+	/* function history(){
 		popWin = window.open("/history.jsp","popWin","left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
-	}
+	} */
 	
 	
 	$(function() {
@@ -45,7 +45,11 @@
 		});
 		
 		$('ul.dropdown-menu a:contains("최근본상품")').on('click', function() {
-			history();
+			popWin = window.open("/history.jsp","popWin","left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
+		});
+		
+		$('ul.dropdown-menu a:contains("구매이력조회")').on('click', function() {
+			self.location = "/purchase/listPurchase";	
 		});
 		
 	   // $('.dropdown-toggle').dropdown();

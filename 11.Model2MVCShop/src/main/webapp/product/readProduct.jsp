@@ -45,6 +45,10 @@
 
 <body bgcolor="#ffffff" text="#000000">
 
+<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/layout/navigationBar.jsp" />
+   	<!-- ToolBar End /////////////////////////////////////-->
+
 <div class="container">
 
 <form name="detailForm" method="post">

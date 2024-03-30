@@ -102,6 +102,8 @@ function alertFalse() {
 
 $(function() {
 	
+	$('a:contains("배송하기")').css('color', 'red');
+	
 	//alert($($('tr.ct_list_pop td')[2]));
 	$('tr.ct_list_pop td.getProdNo_btn').on('click', function() {
 		
@@ -163,8 +165,8 @@ $(function() {
 	$('tr.ct_list_pop td.getProdNo_btn').css('color', 'red');
 	
 	//alert($('tr.ct_list_pop td.getProdNo_btn').parent(':nth-child(even)').html());
-	$('tr.ct_list_pop td.getProdNo_btn').parent(':nth-child(4n+2)').css('background-color', 'whitesmoke');
-	$('tr.ct_list_pop td.getProdNo_btn').parent(':nth-child(4n)').children('td.ct_line02').css('background-color', 'whitesmoke');
+	//$('tr.ct_list_pop td.getProdNo_btn').parent(':nth-child(4n+2)').css('background-color', 'whitesmoke');
+	//$('tr.ct_list_pop td.getProdNo_btn').parent(':nth-child(4n)').children('td.ct_line02').css('background-color', 'whitesmoke');
 	
 	$($('tr td.ct_list_b')[1]).css('color', 'red');
 	
@@ -254,7 +256,9 @@ $(function() {
 				</f:if>
 			<%-- }else { --%>
 			<f:if test="${empty searchVO.searchCondition }">
+			<f:if test="${user.role == 'admin' }">
 				<option value="0" >상품번호</option>
+			</f:if>
 				<option value="1" >상품명</option>
 				<option value="2" >상품가격</option>
 			</f:if>
@@ -318,11 +322,11 @@ $(function() {
 <input type="checkBox" id="priceOptionHigh" name="high" value="${searchVO.priceOption eq 'high' ? 'low' : '' }" onClick="fncGetProductListHigh(1)" ${!empty searchVO.priceOption and searchVO.priceOption eq 'high' ? 'checked' : '' } >가격 높은 순
 
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
+<table class="table">
 	<tr>
 		<td colspan="11" >전체 ${map.totalCount }<%-- map.get("count") --%> 건수, 현재 ${searchVO.currentPage }<%-- searchVO.getCurrentPage() --%> 페이지</td>
 	</tr>
-	<tr>
+	<tr class="success">
 		<td class="ct_list_b" width="100">No</td>
 		<td class="ct_line02"></td>
 		<td class="ct_list_b" width="150">상품명<br/>
@@ -342,9 +346,9 @@ $(function() {
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">현재상태</td>	
 	</tr>
-	<tr>
+	<!-- <tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
-	</tr>
+	</tr> -->
 	<%-- for(int i = 0; i < list.size(); i++) {
 			Product productVO = list.get(i);
 	--%>
@@ -410,9 +414,9 @@ $(function() {
 		</f:if>
 		</td>	
 		</tr>
-	<tr>
+	<!-- <tr>
 		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
-	</tr>
+	</tr> -->
 		</f:forEach>
 		
 	<%-- } --%>

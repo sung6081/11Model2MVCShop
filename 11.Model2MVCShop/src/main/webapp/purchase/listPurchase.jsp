@@ -24,7 +24,21 @@ HashMap<String, Object> map = (HashMap<String, Object>)request.getAttribute("map
 <title>구매 목록조회</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
-<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+<!-- 참조 : http://getbootstrap.com/css/   -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	
+	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	
+	<!--  ///////////////////////// CSS ////////////////////////// -->
+	<style>
+       body > div.container{
+            margin-top: 100px;
+        }
+    </style>
 <script type="text/javascript">
 
 	function fncGetUserList() {
@@ -37,8 +51,8 @@ HashMap<String, Object> map = (HashMap<String, Object>)request.getAttribute("map
 		$($('.ct_list_b')[1]).css('color', 'red');
 		$($('.ct_list_b')[5]).css('color', 'red');
 		
-		$('.ct_list_pop:even').css('background-color', 'whitesmoke');
-		$('.ct_list_pop:odd td.ct_line02').css('background-color', 'whitesmoke');
+		//$('.ct_list_pop:even').css('background-color', 'whitesmoke');
+		//$('.ct_list_pop:odd td.ct_line02').css('background-color', 'whitesmoke');
 		
 		$($('.ct_list_pop td.getpurchase_btn')).css('color', 'red');
 		$($('.ct_list_pop td.getpurchase_btn')).on('click', function() {
@@ -61,7 +75,7 @@ HashMap<String, Object> map = (HashMap<String, Object>)request.getAttribute("map
 			if($(this).text().trim() == '수정하기'){
 				
 				//alert($($(this).parent().children()[0]).text());
-				self.location = "/purchase/updateTranCode?tranNo="+$($(this).parent().children()[0]).children().val();
+				self.location = "/purchase/updatePurchaseView?tranNo="+$($(this).parent().children()[0]).children().val();
 				
 			}
 			
@@ -81,7 +95,11 @@ HashMap<String, Object> map = (HashMap<String, Object>)request.getAttribute("map
 
 <body bgcolor="#ffffff" text="#000000"> 
 
-<div style="width: 98%; margin-left: 10px;">
+<!-- ToolBar Start /////////////////////////////////////-->
+	<jsp:include page="/layout/navigationBar.jsp" />
+   	<!-- ToolBar End /////////////////////////////////////-->
+
+<div class="container" style="width: 98%; margin-left: 10px;">
 
 <form name="detailForm" action="/user/listUser" method="post">
 
@@ -99,11 +117,11 @@ HashMap<String, Object> map = (HashMap<String, Object>)request.getAttribute("map
 	</tr>
 </table>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top: 10px;">
+<table class="table">
 	<tr>
 		<td colspan="11">전체 ${map.Integer }<%-- count--%> 건수, 현재 ${resultPage.currentPage } 페이지</td>
 	</tr>
-	<tr>
+	<tr class="success">
 		<td class="ct_list_b" width="100">No<br/><h7 >(click:상세정보)</h7></td>
 		<td class="ct_line02"></td>
 		<td class="ct_list_b" width="150">물품명<br/><h7 >(click:구매물건정보)</h7></td>
@@ -117,9 +135,9 @@ HashMap<String, Object> map = (HashMap<String, Object>)request.getAttribute("map
 		<td class="ct_list_b">정보수정</td>
 		<td class="ct_line02"></td>
 	</tr>
-	<tr>
+	<!-- <tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
-	</tr>
+	</tr> -->
 	<x:set var="i" value="1" />
 	<x:forEach var="purchase" items="${map.list }">
 	<tr class="ct_list_pop">
@@ -179,9 +197,9 @@ HashMap<String, Object> map = (HashMap<String, Object>)request.getAttribute("map
 		</x:choose>
 		</td>
 	</tr>
-	<tr>
+	<!-- <tr>
 		<td colspan="11" bgcolor="D6D7D6" height="1"></td>
-	</tr>
+	</tr> -->
 	<%-- } --%>
 	</x:forEach>
 	

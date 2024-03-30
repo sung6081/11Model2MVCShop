@@ -73,9 +73,13 @@
 		$('td.btn_extend').css('color', 'red');
 		$('td.btn_extend').on('click', function(event) {
 			
+			//alert($(this).text().trim());
+			//alert($(this).attr('id'));
+			var thisId = $(this).attr('id');
+			
 			if($(this).text().trim() == '´İ±â') {
 				
-				$(this).html('ÆîÄ¡±â<img width="12px" height="12px" src="/images/up_and_down.jpg">');
+				$(this).html('ÆîÄ¡±â<span class="glyphicon glyphicon-menu-down"></span>');
 				$('h6').remove();
 				return;
 				
@@ -98,9 +102,9 @@
 					//$('td.btn_extend').html('ÆîÄ¡±â<img width="12px" height="12px" src="/images/up_and_down.jpg">');
 					//$(this).html('´İ±â<img width="12px" height="12px" src="/images/up_and_down.jpg">');
 					
-							$($('td.btn_extend')).html('ÆîÄ¡±â<img width="12px" height="12px" src="/images/up_and_down.jpg">');
-						
-					$(event.target).html('´İ±â<img width="12px" height="12px" src="/images/up_and_down.jpg">');
+					$($('td.btn_extend')).html('ÆîÄ¡±â<span class="glyphicon glyphicon-menu-down"></span>');
+					//alert($(event.target).html());
+					$("#"+thisId).html('´İ±â<span class="glyphicon glyphicon-menu-up"></span>');
 					$('h6').remove();
 					//alert($('#append_'+userId).text());
 					//alert($(event.target).parents().children('#append_'+userId).html());
@@ -173,7 +177,7 @@
 	</tr>
 </table>
 
-<table class="table table-hover" width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:10px;">
+<table class="table" >
 	<tr>
 		<td colspan="11" >
 			ÀüÃ¼  ${resultPage.totalCount } °Ç¼ö,	ÇöÀç ${resultPage.currentPage }<%-- resultPage.getCurrentPage() --%> ÆäÀÌÁö 
@@ -209,7 +213,7 @@
 		<td class="ct_line02"></td>
 		<td align="center">${vo.email }<span></span>
 		</td>
-		<td align="right" class="btn_extend" >ÆîÄ¡±â<img width="12px" height="12px" src="/images/up_and_down.jpg">
+		<td align="right" class="btn_extend" id="btn_extend${i }" >ÆîÄ¡±â<span class="glyphicon glyphicon-menu-down"></span>
 		</td>		
 	</tr>
 	<tr id="append_${vo.userId }">

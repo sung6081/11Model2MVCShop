@@ -25,12 +25,7 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
-	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
-       body > div.container{
-            margin-top: 100px;
-        }
-    </style>
+	
 <script type="text/javascript" src="../javascript/calendar.js">
 </script>
 
@@ -65,6 +60,8 @@ function fncAddProduct(){
 
 $(function() {
 	
+	alert(history);
+	
 	$($('.ct_btn01')[0]).on('click', function() {
 		
 		fncAddProduct();
@@ -80,6 +77,12 @@ $(function() {
 });
 
 </script>
+<!--  ///////////////////////// CSS ////////////////////////// -->
+	<style>
+       body > div.container{
+            margin-top: 100px;
+        }
+    </style>
 </head>
 
 <body bgcolor="#ffffff" text="#000000">
