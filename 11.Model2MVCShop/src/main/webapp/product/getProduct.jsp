@@ -31,6 +31,15 @@
 
 	$(function() {
 		
+		if($('.ct_btn01').length == 1){
+			$('.ct_btn01').on('click', function() {
+				
+				history.go(-1);
+				
+			});
+			return;
+		}
+		
 		$($('.ct_btn01')[0]).on('click', function() {
 			
 			self.location = "/purchase/addPurchaseView?prod_no=${product.prodNo }";
@@ -170,7 +179,8 @@
 
 		<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
-			<f:if test="${empty product.proTranCode }">
+			<f:if test="${!empty user && empty product.proTranCode }">
+			<f:if test="${user.role == 'user' }">
 				<td width="17" height="23">
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
 				</td>
@@ -182,6 +192,7 @@
 					<img src="/images/ct_btnbg03.gif" width="14" height="23">
 				</td>
 				<td width="30"></td>
+			</f:if>
 			</f:if>
 				<td width="17" height="23">
 					<img src="/images/ct_btnbg01.gif" width="17" height="23"/>

@@ -98,10 +98,10 @@ public class ProductController {
 		
 		ModelAndView modelAndView = new ModelAndView("redirect:/user/loginView.jsp");
 		
-		if(session.getAttribute("user") == null) {
-			System.out.println("getProductAction end");
-			return modelAndView;
-		}
+//		if(session.getAttribute("user") == null) {
+//			System.out.println("getProductAction end");
+//			return modelAndView;
+//		}
 		
 		if( request.getParameter("menu") != null && request.getParameter("menu").equals("manage")) {
 			modelAndView.setViewName("/product/updateProductView");

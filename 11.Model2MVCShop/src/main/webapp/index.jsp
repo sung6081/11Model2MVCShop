@@ -39,12 +39,14 @@
 	
 	
 	<div class="container">
-	
+	<div class="row">
 		<div class="jumbotron">
         	<h1>Model2MVCShop</h1>
-        	
+        	<p>로그인 후 사용가능...</p>
+			<p>로그인 전 검색만 가능합니다.</p>
+			<p>회원가입 하세요.</p>
       	</div>
-	
+	</div>
 	</div>
 		
 

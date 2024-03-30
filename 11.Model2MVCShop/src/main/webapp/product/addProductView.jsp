@@ -11,6 +11,9 @@
 <title>상품등록</title>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
+<script type="text/javascript" src="../javascript/calendar.js">
+</script>
+
 <!-- 참조 : http://getbootstrap.com/css/   -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
@@ -26,8 +29,7 @@
             margin-top: 100px;
         }
     </style>
-<script type="text/javascript" src="../javascript/calendar.js">
-</script>
+
 
 <script type="text/javascript">
 function fncAddProduct(){
@@ -82,7 +84,7 @@ $(function() {
 		
 		//alert($('input[name="manuDate"]').parent().html());
 		show_calendar('document.detailForm.manuDate', $('input[name="manuDate"]').val());
-		
+		//show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value);
 	});
 	
 });
@@ -163,7 +165,7 @@ $(function() {
 		<td class="ct_write01">
 			<input type="text" name="manuDate" readonly="readonly" class="ct_input_g"  
 						style="width: 100px; height: 19px"	maxLength="10" minLength="6"/>
-				&nbsp;<img src="../images/ct_icon_date.gif" width="15" height="15" /><!-- onclick="show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)" -->
+				&nbsp;<img src="../images/ct_icon_date.gif" width="15" height="15" />
 		</td>
 	</tr>
 	<tr>

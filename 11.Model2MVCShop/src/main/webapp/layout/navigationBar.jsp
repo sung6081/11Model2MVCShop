@@ -68,7 +68,7 @@
 	
 	<div class="container">
 	       
-		<a class="navbar-brand" href="/index.jsp">Model2 MVC Shop</a>
+		<a class="navbar-brand" href="/index.jsp"><span class="glyphicon glyphicon-home"></span></a>
 		
 		<!-- toolBar Button Start //////////////////////// -->
 		<div class="navbar-header">
@@ -116,7 +116,7 @@
 		                     </ul>
 		                </li>
 	                 </c:if>
-	                 
+	                 </c:if>
 	              <!-- 구매관리 DrowDown -->
 	              <li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -129,13 +129,14 @@
 	                         <c:if test="${sessionScope.user.role == 'user'}">
 	                           <li><a href="#">구매이력조회</a></li>
 	                         </c:if>
-	                         
+	                         <c:if test="${!empty user }">
 	                         <li class="divider"></li>
 	                         
 	                         <li><a href="#">최근본상품</a></li>
+	                         </c:if>
 	                     </ul>
 	                 </li>
-	                 </c:if>
+	                 
 	             </ul>
 	             
 	             <c:if test="${!empty user }">
@@ -149,6 +150,7 @@
 	                <li><a href="#">회원가입</a></li>
 	            </ul>
 	            </c:if>
+	            
 		</div>
 		<!-- dropdown hover END -->	       
 	    

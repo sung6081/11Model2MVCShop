@@ -15,6 +15,9 @@
 <head>
 
 <link rel="stylesheet" href="/css/admin.css" type="text/css">
+<script type="text/javascript" src="../javascript/calendar.js">
+</script>
+
 <!-- ÂüÁ¶ : http://getbootstrap.com/css/   -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
@@ -32,8 +35,7 @@
     </style>
 <title>addPurchaseView</title>
 
-<script type="text/javascript" src="../javascript/calendar.js">
-</script>
+
 
 <script type="text/javascript">
 
