@@ -48,6 +48,7 @@ function fncGetProductList(currentPage) {
    	document.detailForm.submit();		
 }
 
+//가격낮은순
 function fncGetProductListLow(currentPage){
 	
 	//console.log(1);
@@ -66,6 +67,7 @@ function fncGetProductListLow(currentPage){
 	//$('form').submit();
 }
 
+//가격 높은순
 function fncGetProductListHigh(currentPage){
 	console.log(2);
 	document.getElementById("currentPage").value = currentPage;
@@ -126,7 +128,8 @@ $(function() {
 		if($(this).val() == "2"){
 		
 			//alert($('input[name="searchCondition"]').html());
-			$('input.ct_input_g').remove();
+			//$('input.ct_input_g').remove();
+			$('input.ct_input_g').attr('type', 'hidden');
 			$('.search_btn').remove();
 			
 			var append = '<select id="searchRange" name="searchRange" class="ct_input_g" style="width:200px" onChange="fncGetProductList(${resultPage.currentPage})">'
@@ -142,7 +145,7 @@ $(function() {
 			
 		}else{
 			
-			var append = '<input type="text" name="searchKeyword"  class="ct_input_g" style="width:200px; height:19px"/>';
+			//var append = '<input type="text" name="searchKeyword"  class="ct_input_g" style="width:200px; height:19px" />';
 			var append2 = '<td align="right" width="70" class="search_btn" >'
 				+'<table border="0" cellspacing="0" cellpadding="0">'
 				+'<tr>'
@@ -161,10 +164,11 @@ $(function() {
 			//alert(append);
 			//alert(append2);
 			
-			$('input.ct_input_g').remove();
+			//$('input.ct_input_g').remove();
 			$('.search_btn').remove();
 			$('#searchRange').remove();
-			$(this).parent().append(append);
+			//$(this).parent().append(append);
+			$('input.ct_input_g').attr('type', 'text');
 			$(this).parent().parent().append(append2);
 			
 		}
