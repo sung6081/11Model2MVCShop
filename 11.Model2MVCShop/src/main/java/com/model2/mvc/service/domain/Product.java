@@ -66,9 +66,7 @@ public class Product {
 		return regDate;
 	}
 	public void setRegDate(Date regDate) {
-		regDateString = regDate.toString().split(" ")[0].split("-")[0]
-				+regDate.toString().split(" ")[0].split("-")[1]
-				+regDate.toString().split(" ")[0].split("-")[2];
+		regDateString = regDate.toString();
 		this.regDate = regDate;
 	}
 

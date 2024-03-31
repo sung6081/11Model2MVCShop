@@ -112,6 +112,7 @@ $(function() {
 		
 	});
 	
+	//서치컨디션에 따라 검색창과 가격범위 변환
 	$('#searchCondition').on('change', function() {
 		
 		if($(this).val() == "2"){
@@ -162,6 +163,50 @@ $(function() {
 		
 	});
 	
+	//ajax
+	$('td.btn_extend').css('color', 'red');
+	$('td.btn_extend').on('click', function(event) {
+		
+		//alert($(this).text().trim());
+		//alert($(this).attr('id'));
+		var thisId = $(this).attr('id');
+		
+		if($(this).text().trim() == '닫기') {
+			
+			$(this).html('펼치기<span class="glyphicon glyphicon-menu-down"></span>');
+			$('h6').remove();
+			return;
+			
+		}
+		
+		var prodNo = $(this).parent().children('.getProdNo_btn').children().val();
+		var url = "/app/product/getProduct/"+prodNo;
+		//alert(url);
+		$.get(url, function(JSONData, status) {
+			
+			var displayValue = "<h6>"
+				+"상품명 : "+JSONData.prodName+"<br/>"
+				+"상품상세정보 : "+JSONData.prodDetail+"<br/>"
+				+"제조일자 : "+JSONData.manuDate+"<br/>"
+				+"등록일 : "+JSONData.regDateString+"<br/>"
+				+"</h6>";
+				//Debug...									
+				//alert(displayValue);
+				//$('td.btn_extend').html('펼치기<img width="12px" height="12px" src="/images/up_and_down.jpg">');
+				//$(this).html('닫기<img width="12px" height="12px" src="/images/up_and_down.jpg">');
+				
+				$($('td.btn_extend')).html('펼치기<span class="glyphicon glyphicon-menu-down"></span>');
+				//alert($(event.target).html());
+				$("#"+thisId).html('닫기<span class="glyphicon glyphicon-menu-up"></span>');
+				$('h6').remove();
+				//alert($('#append_'+userId).text());
+				//alert($(event.target).parents().children('#append_'+userId).html());
+				$('#append_'+prodNo).html(displayValue);
+			
+		}, "json");
+		
+	});
+	
 	$('tr.ct_list_pop td.getProdNo_btn').css('color', 'red');
 	
 	//alert($('tr.ct_list_pop td.getProdNo_btn').parent(':nth-child(even)').html());
@@ -170,6 +215,7 @@ $(function() {
 	
 	$($('tr td.ct_list_b')[1]).css('color', 'red');
 	
+	//현재 페이지 색 빨간색으로
 	//alert($('a.movePage_btn').text());
 	for(var i = ${resultPage.beginUnitPage}; i <= ${resultPage.endUnitPage}; i++ ) {
 		if($('a.movePage_btn#btn'+i).text() == ${resultPage.currentPage}) {
@@ -344,7 +390,8 @@ $(function() {
 		<td class="ct_line02"></td>
 		<td class="ct_list_b">등록일</td>	
 		<td class="ct_line02"></td>
-		<td class="ct_list_b">현재상태</td>	
+		<td class="ct_list_b">현재상태</td>
+		<td class="ct_list_b"></td>	
 	</tr>
 	<!-- <tr>
 		<td colspan="11" bgcolor="808285" height="1"></td>
@@ -412,7 +459,11 @@ $(function() {
 		<%-- } --%>
 		</f:choose>
 		</f:if>
-		</td>	
+		</td>
+		<td align="right" class="btn_extend" id="btn_extend${i }" >펼치기<span class="glyphicon glyphicon-menu-down"></span>
+		</td>
+		</tr>
+		<tr id="append_${product.prodNo }">
 		</tr>
 	<!-- <tr>
 		<td colspan="11" bgcolor="D6D7D6" height="1"></td>

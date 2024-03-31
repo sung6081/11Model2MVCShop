@@ -10,7 +10,7 @@
 	</c:if>
 	
 	<c:forEach var="i"  begin="${resultPage.beginUnitPage}" end="${resultPage.endUnitPage}" step="1">
-		<a href="javascript:fncGet${where }List('${ i }', ${param.menu });">${ i }</a>
+		<a href="javascript:fncGet${where }List('${ i }', ${param.menu });" class="movePage_btn" id="btn${i }" >${ i }</a>
 	</c:forEach>
 	
 	<c:if test="${ resultPage.endUnitPage >= resultPage.maxPage }">

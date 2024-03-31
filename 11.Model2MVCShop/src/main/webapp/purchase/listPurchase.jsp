@@ -88,6 +88,14 @@ HashMap<String, Object> map = (HashMap<String, Object>)request.getAttribute("map
 			
 		});
 		
+		//현재 페이지 색 빨간색으로
+		//alert($('a.movePage_btn').text());
+		for(var i = ${resultPage.beginUnitPage}; i <= ${resultPage.endUnitPage}; i++ ) {
+			if($('a#btn'+i).text() == ${resultPage.currentPage}) {
+				$('a#btn'+i).css('color', 'red');
+			}
+		}
+		
 	});
 	
 </script>

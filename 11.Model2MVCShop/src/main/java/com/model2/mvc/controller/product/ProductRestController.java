@@ -76,22 +76,16 @@ public class ProductRestController {
 		
 	}//end of addProductAction
 	
-	@RequestMapping("getProduct/{prodNo}/{menu}")
-	public Map getProductAction(@PathVariable("prodNo") int prodNo,
-								@PathVariable("menu") String menu ) throws Exception {
+	@RequestMapping("getProduct/{prodNo}")
+	public Product getProductAction(@PathVariable("prodNo") int prodNo ) throws Exception {
 		
 		System.out.println("getProductAction start");
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
 		Product product = productService.getProduct(prodNo);
-		
-		map.put("product", product);
-		map.put("menu", menu);
 		
 		System.out.println("getProductAction Realend");
 		
-		return map;
+		return product;
 		
 	}//end of getProductAction
 	

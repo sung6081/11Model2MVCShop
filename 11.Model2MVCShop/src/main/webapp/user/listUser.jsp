@@ -70,6 +70,7 @@
 			
 		});
 		
+		//ajax
 		$('td.btn_extend').css('color', 'red');
 		$('td.btn_extend').on('click', function(event) {
 			
@@ -113,6 +114,14 @@
 			}, "json");
 			
 		});
+		
+		//현재 페이지 색 빨간색으로
+		//alert($('a.movePage_btn').text());
+		for(var i = ${resultPage.beginUnitPage}; i <= ${resultPage.endUnitPage}; i++ ) {
+			if($('a.movePage_btn#btn'+i).text() == ${resultPage.currentPage}) {
+				$('a.movePage_btn#btn'+i).css('color', 'red');
+			}
+		}
 	});
 	
 </script>
