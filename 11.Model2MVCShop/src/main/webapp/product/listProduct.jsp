@@ -42,7 +42,7 @@
         }
     </style>
 <script type="text/javascript">
-function fncGetProductList(currentPage, menu) {
+function fncGetProductList(currentPage) {
 	//document.getElementById("currentPage").value = currentPage;
 	$("#currentPage").val(currentPage);
    	document.detailForm.submit();		
@@ -103,6 +103,14 @@ function alertFalse() {
 $(function() {
 	
 	$('a:contains("배송하기")').css('color', 'red');
+	
+	//현재 페이지 색 red
+	for(var i = 0; i < $('li.movePage_btn a').length; i++){
+		//alert($($('li.movePage_btn a')[i]).text());
+		if($($('li.movePage_btn a')[i]).text() == ${resultPage.currentPage}){
+			$($('li.movePage_btn a')[i]).css('color', 'red');
+		}
+	}
 	
 	//alert($($('tr.ct_list_pop td')[2]));
 	$('tr.ct_list_pop td.getProdNo_btn').on('click', function() {
@@ -215,13 +223,35 @@ $(function() {
 	
 	$($('tr td.ct_list_b')[1]).css('color', 'red');
 	
-	//현재 페이지 색 빨간색으로
-	//alert($('a.movePage_btn').text());
-	for(var i = ${resultPage.beginUnitPage}; i <= ${resultPage.endUnitPage}; i++ ) {
-		if($('a.movePage_btn#btn'+i).text() == ${resultPage.currentPage}) {
-			$('a.movePage_btn#btn'+i).css('color', 'red');
+	//페이지 네비게이션
+	$('li.movePage_btn a').on('click', function() {
+		
+		//alert($(this).next().val());
+		fncGetProductList($(this).next().val());
+		
+	});
+	
+	//이전 페이지
+	$('.pre_btn').on('click', function() {
+		if(${resultPage.beginUnitPage} != 1) {
+			//alert($(this).next().val());
+			fncGetProductList($(this).next().val());
+		}else {
+			//alert($(this).next().val());
 		}
-	}
+		
+	});
+	
+	//이후 페이지
+	$('.next_btn').on('click', function() {
+		if(${resultPage.endUnitPage} != ${resultPage.maxPage}) {
+			//alert($(this).next().val());
+			fncGetProductList($(this).next().val());
+		}else {
+			//alert($(this).next().val());
+		}
+		
+	});
 });
 
 </script>
@@ -477,67 +507,30 @@ $(function() {
 	<tr>
 		<td align="center">
 		<input type="hidden" id="currentPage" name="page" value="${resultPage.currentPage }"/>
-		<input type="hidden" id="menu" name="menu" value=""/>
-		<%--
-			System.out.println(p.getPageSize());
-			int cnt = (int)(map.get("totalCount")) / p.getPageSize();
-			if((int)(map.get("totalCount")) % p.getPageSize() != 0)
-				cnt += 1;
-			int left = p.getBeginUnitPage();
-			int right = p.getEndUnitPage();
-			if(left == 1){--%>
-			<f:choose>
-			<f:when test ="${resultPage.beginUnitPage == 1 }">
-				◀ 이전
-			</f:when>
-			<%--}else {
-			if(searchVO.getSearchCondition() != null && searchVO.getSearchKeyword() != null) {--%>
-			<f:otherwise>
-			<f:if test="${ !empty searchVO.searchCondition && !empty searchVO.searchKeyword }">
-			<a href="javascript:fncGetProductList(${resultPage.beginUnitPage - 1 })">◀ 이전</a>
-			
-			<!-- <a href="/product/listProduct?page=${resultPage.beginUnitPage - 1 }&menu=${param.menu }&searchCondition=${searchVO.searchCondition }&searchKeyword=${searchVO.searchKeyword }">◀ 이전</a> -->
-			</f:if>
-		<f:if test="${ empty searchVO.searchCondition || empty searchVO.searchKeyword }">
-			<a href="javascript:fncGetProductList(${resultPage.beginUnitPage - 1 })">◀ 이전</a>
-			<!-- <a href="/product/listProduct?page=${resultPage.beginUnitPage - 1}&menu=${param.menu }">◀ 이전</a> -->
-		</f:if>		
-			
-			</f:otherwise>
-			</f:choose>
-		<f:forEach var="i" begin="${resultPage.beginUnitPage }" end="${resultPage.endUnitPage }" step="1">
-		<f:choose>
-		<f:when test="${!empty searchVO.searchCondition && !empty searchVO.searchKeyword }">
-			<a href="javascript:fncGetProductList(${i})" class="movePage_btn" id="btn${i }" >${i }<%-- i --%></a> 
-			<!-- <a href="/product/listProduct?page=${i }<%--i --%>&menu=${param.menu }<%--menu--%>&searchCondition=${searchVO.searchCondition }<%--searchVO.getSearchCondition() --%>&searchKeyword=${searchVO.searchKeyword }<%-- searchVO.getSearchKeyword() --%>">${i }<%-- i --%></a> -->
-		</f:when>
+		<input type="hidden" id="menu" name="menu" value="${param.menu }"/>
 		
-		<f:otherwise>
-			<a href="javascript:fncGetProductList(${i})" class="movePage_btn" id="btn${i }" >${i }<%-- i --%></a> 
-			<!-- <a href="/product/listProduct?page=${i }<%-- i --%>&menu=${param.menu }<%-- menu --%>">${i }<%-- i --%></a> -->
-		</f:otherwise>
-		</f:choose>
-		</f:forEach>
-		<%-- if(right >= p.getMaxPage()) {--%>
-		<f:choose>
-		<f:when test="${resultPage.endUnitPage == resultPage.maxPage }">
-			이후 ▶
-		</f:when>
-			<%-- }else { --%>
-			
-				<%-- if(searchVO.getSearchCondition() != null && searchVO.getSearchKeyword() != null) {--%>
-		<f:otherwise>
-		<f:choose>
-		<f:when test="${!empty searchVO.searchCondition && !empty searchVO.searchKeyword }">
-			<a href="/product/listProduct?page=${resultPage.endUnitPage + 1 }{<%-- right + 1 --%>&menu=${param.menu }<%-- menu --%>&searchCondition=${searchVO.searchCondition }<%-- searchVO.getSearchCondition() --%>&searchKeyword=${searchVO.searchKeyword }<%-- searchVO.getSearchKeyword() --%>">이후 ▶</a>
-		</f:when>
-		<%--	}else { --%>
-		<f:otherwise>
-			<a href="/product/listProduct?page=${resultPage.endUnitPage + 1 }<%-- right + 1 --%>&menu=${param.menu }<%-- menu --%>">이후 ▶</a>
-		</f:otherwise>
-			</f:choose>
-			</f:otherwise>
-			</f:choose>
+		<nav aria-label="Page navigation">
+  				<ul class="pagination">
+			    <li ${resultPage.beginUnitPage == 1 ? 'class="disabled"' : '' }>
+			      <a href="#" aria-label="Previous" class="pre_btn" >
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+			      <input type="hidden" value="${ resultPage.beginUnitPage - 1}">
+			    </li>
+			    <f:forEach var="i" begin="${resultPage.beginUnitPage }" end="${resultPage.endUnitPage }" >
+			    	<li class="movePage_btn">
+			    		<a href="#">${i }</a>
+			    		<input type="hidden" id="page_${i }" value="${ i}">
+			    	</li>
+			    </f:forEach>
+			    <li ${resultPage.endUnitPage == resultPage.maxPage ? 'class="disabled"' : '' }>
+			      <a href="#" aria-label="Next" class="next_btn" >
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+			      <input type="hidden" value="${ resultPage.endUnitPage + 1}">
+			    </li>
+			  </ul>
+			</nav>
 		
     	</td>
 	</tr>

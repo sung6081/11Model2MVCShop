@@ -47,6 +47,14 @@
 		
 		$('.table-hover').css('background-color', '');
 		
+		//현재 페이지 색 red
+		for(var i = 0; i < $('li.movePage_btn a').length; i++){
+			//alert($($('li.movePage_btn a')[i]).text());
+			if($($('li.movePage_btn a')[i]).text() == ${resultPage.currentPage}){
+				$($('li.movePage_btn a')[i]).css('color', 'red');
+			}
+		}
+		
 		//alert($('.ct_list_b[width=150]').html().trim());
 		$($('.ct_list_b[width=150]')[0]).css('color', 'red');
 		
@@ -115,13 +123,36 @@
 			
 		});
 		
-		//현재 페이지 색 빨간색으로
-		//alert($('a.movePage_btn').text());
-		for(var i = ${resultPage.beginUnitPage}; i <= ${resultPage.endUnitPage}; i++ ) {
-			if($('a.movePage_btn#btn'+i).text() == ${resultPage.currentPage}) {
-				$('a.movePage_btn#btn'+i).css('color', 'red');
+		//페이지 네비게이션
+		$('li.movePage_btn a').on('click', function() {
+			
+			//alert($(this).next().val());
+			fncGetUserList($(this).next().val());
+			
+		});
+		
+		//이전 페이지
+		$('.pre_btn').on('click', function() {
+			if(${resultPage.beginUnitPage} != 1) {
+				//alert($(this).next().val());
+				fncGetUserList($(this).next().val());
+			}else {
+				//alert("disabled");
 			}
-		}
+			
+		});
+		
+		//이후 페이지
+		$('.next_btn').on('click', function() {
+			if(${resultPage.endUnitPage} != ${resultPage.maxPage}) {
+				//alert($(this).next().val());
+				fncGetUserList($(this).next().val());
+			}else {
+				//alert("disabled");
+			}
+			
+		});
+		
 	});
 	
 </script>
@@ -241,37 +272,30 @@
 		   <input type="hidden" id="currentPage" name="currentPage" value=""${resultPage.currentPage }/>
 			<%-- if( resultPage.getCurrentPage() <= resultPage.getPageUnit() ){ --%>
 			
-			<jsp:include page="../common/pageNavigator.jsp"/>
+			<!--<jsp:include page="../common/pageNavigator.jsp"/>-->
 			
-			<!--<f:choose>
-			<f:when test="${resultPage.beginUnitPage <= resultPage.pageUnit }">
-					◀ 이전
-			</f:when>
-			<%-- }else{ --%>
-			<f:otherwise>
-					<a href="javascript:fncGetUserList('${resultPage.beginUnitPage - 1 }<%--resultPage.getBeginUnitPage()-1--%>')">◀ 이전</a>
-			</f:otherwise>
-			</f:choose>
-			<%-- } --%>
-
-			<%--	for(int i=resultPage.getBeginUnitPage();i<= resultPage.getEndUnitPage() ;i++){	--%>
-			<f:forEach var="i" begin="${resultPage.beginUnitPage }" end="${resultPage.endUnitPage }" step="1" >
-					<a href="javascript:fncGetUserList('${i }');">${i }</a>
-			</f:forEach>
-			<%-- 	}  --%>
-	
-			<%-- if( resultPage.getEndUnitPage() >= resultPage.getMaxPage() ){
-					System.out.println(resultPage.getMaxPage());--%>
-			<f:choose>
-				<f:when test="${resultPage.endUnitPage >= resultPage.maxPage }">
-					이후 ▶
-				</f:when>
-			<%-- }else{ --%>
-				<f:otherwise>
-					<a href="javascript:fncGetUserList('${resultPage.endUnitPage + 1 }<%--resultPage.getEndUnitPage()+1--%>')">이후 ▶</a>
-			<%-- } --%>
-				</f:otherwise>
-			</f:choose>-->
+			<nav aria-label="Page navigation">
+  				<ul class="pagination">
+			    <li ${resultPage.beginUnitPage == 1 ? 'class="disabled"' : '' }>
+			      <a href="#" aria-label="Previous" class="pre_btn" >
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+			      <input type="hidden" value="${ resultPage.beginUnitPage - 1}">
+			    </li>
+			    <f:forEach var="i" begin="${resultPage.beginUnitPage }" end="${resultPage.endUnitPage }" >
+			    	<li class="movePage_btn">
+			    		<a href="#">${i }</a>
+			    		<input type="hidden" id="page_${i }" value="${ i}">
+			    	</li>
+			    </f:forEach>
+			    <li ${resultPage.endUnitPage == resultPage.maxPage ? 'class="disabled"' : '' }>
+			      <a href="#" aria-label="Next" class="next_btn" >
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+			      <input type="hidden" value="${ resultPage.endUnitPage + 1}">
+			    </li>
+			  </ul>
+			</nav>
 		
     	</td> 
 	</tr>

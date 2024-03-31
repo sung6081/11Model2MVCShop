@@ -41,15 +41,25 @@ HashMap<String, Object> map = (HashMap<String, Object>)request.getAttribute("map
     </style>
 <script type="text/javascript">
 
-	function fncGetUserList() {
-		document.detailForm.submit();
-	}
+function fncGetPurchaseList(currentPage) {
+	//document.getElementById("currentPage").value = currentPage;
+	$("#page").val(currentPage);
+   	document.detailForm.submit();		
+}
 	
 	$(function() {
 		
 		$($('.ct_list_b')[0]).css('color', 'red');
 		$($('.ct_list_b')[1]).css('color', 'red');
 		$($('.ct_list_b')[5]).css('color', 'red');
+		
+		//현재 페이지 색 red
+		for(var i = 0; i < $('li.movePage_btn a').length; i++){
+			//alert($($('li.movePage_btn a')[i]).text());
+			if($($('li.movePage_btn a')[i]).text() == ${resultPage.currentPage}){
+				$($('li.movePage_btn a')[i]).css('color', 'red');
+			}
+		}
 		
 		//$('.ct_list_pop:even').css('background-color', 'whitesmoke');
 		//$('.ct_list_pop:odd td.ct_line02').css('background-color', 'whitesmoke');
@@ -88,13 +98,35 @@ HashMap<String, Object> map = (HashMap<String, Object>)request.getAttribute("map
 			
 		});
 		
-		//현재 페이지 색 빨간색으로
-		//alert($('a.movePage_btn').text());
-		for(var i = ${resultPage.beginUnitPage}; i <= ${resultPage.endUnitPage}; i++ ) {
-			if($('a#btn'+i).text() == ${resultPage.currentPage}) {
-				$('a#btn'+i).css('color', 'red');
+		//페이지 네비게이션
+		$('li.movePage_btn a').on('click', function() {
+			
+			//alert($(this).next().val());
+			fncGetPurchaseList($(this).next().val());
+			
+		});
+		
+		//이전 페이지
+		$('.pre_btn').on('click', function() {
+			if(${resultPage.beginUnitPage} != 1) {
+				//alert($(this).next().val());
+				fncGetPurchaseList($(this).next().val());
+			}else {
+				//alert($(this).next().val());
 			}
-		}
+			
+		});
+		
+		//이후 페이지
+		$('.next_btn').on('click', function() {
+			if(${resultPage.endUnitPage} != ${resultPage.maxPage}) {
+				//alert($(this).next().val());
+				fncGetPurchaseList($(this).next().val());
+			}else {
+				//alert($(this).next().val());
+			}
+			
+		});
 		
 	});
 	
@@ -109,7 +141,7 @@ HashMap<String, Object> map = (HashMap<String, Object>)request.getAttribute("map
 
 <div class="container" style="width: 98%; margin-left: 10px;">
 
-<form name="detailForm" action="/user/listUser" method="post">
+<form name="detailForm" action="/purchase/listPurchase" method="post">
 
 <table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
 	<tr>
@@ -217,40 +249,29 @@ HashMap<String, Object> map = (HashMap<String, Object>)request.getAttribute("map
 <table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top: 10px;">
 	<tr>
 		<td align="center">
-		 <%-- int pageUnit = Integer.parseInt(request.getServletContext().getInitParameter("pageSize"));
-		 int totalPage = count / pageUnit;
-		 if(count % pageUnit != 0)
-			 totalPage += 1;
-		 
-		 if(p.getBeginUnitPage() == 1){ --%>
-		 <x:choose>
-		 <x:when test="${resultPage.beginUnitPage == 1 }">
-			 ◀ 이전
-		</x:when>
-		<%-- }else{  --%>
-		<x:otherwise>
-			 <a href="/purchase/listPurchase?page=${resultPage.beginUnitPage -1 }<%-- p.getBeginUnitPage() - 1 --%>">◀ 이전</a>
-		</x:otherwise>
-		</x:choose>
-		<%-- }
-		 
-		 for(int i = p.getBeginUnitPage(); i <= p.getEndUnitPage(); i++) { --%>
-		<x:forEach var="i" begin="${resultPage.beginUnitPage }" end="${resultPage.endUnitPage }" step="1">
-			<a href="/purchase/listPurchase?page=${i }" id="btn${i }" >${i }<%-- i --%></a> 
-		</x:forEach>
-		<%-- } --%>
-		
-		<%-- if(p.getEndUnitPage() >= p.getMaxPage()) {--%>
-		<x:choose>
-		<x:when test="${resultPage.endUnitPage >= resultPage.maxPage }">
-				이후 ▶
-		</x:when>
-		<%-- }else { --%>
-		<x:otherwise>
-				<a href="/purchase/listPurchase?page=${resultPage.endUnitPage + 1 }<%-- p.getEndUnitPage() + 1 --%>">이후 ▶</a>
-		</x:otherwise>
-		</x:choose>
-		<%-- } --%>
+		<input type="hidden" id="page" name="page" >
+		 <nav aria-label="Page navigation">
+  				<ul class="pagination">
+			    <li ${resultPage.beginUnitPage == 1 ? 'class="disabled"' : '' }>
+			      <a href="#" aria-label="Previous" class="pre_btn" >
+			        <span aria-hidden="true">&laquo;</span>
+			      </a>
+			      <input type="hidden" value="${ resultPage.beginUnitPage - 1}">
+			    </li>
+			    <x:forEach var="i" begin="${resultPage.beginUnitPage }" end="${resultPage.endUnitPage }" >
+			    	<li class="movePage_btn">
+			    		<a href="#">${i }</a>
+			    		<input type="hidden" id="page_${i }" value="${ i}">
+			    	</li>
+			    </x:forEach>
+			    <li ${resultPage.endUnitPage == resultPage.maxPage ? 'class="disabled"' : '' }>
+			      <a href="#" aria-label="Next" class="next_btn" >
+			        <span aria-hidden="true">&raquo;</span>
+			      </a>
+			      <input type="hidden" value="${ resultPage.endUnitPage + 1}">
+			    </li>
+			  </ul>
+			</nav>
 		</td>
 	</tr>
 </table>
