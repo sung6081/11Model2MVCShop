@@ -33,7 +33,8 @@
 		
 		$('.ct_btn01').on('click', function() {
 			
-			self.location = "/purchase/listPurchase";
+			history.go(-1);
+			//self.location = "/purchase/listPurchase";
 			
 		});
 		

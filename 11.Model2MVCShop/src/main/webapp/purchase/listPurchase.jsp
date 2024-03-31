@@ -67,7 +67,7 @@ function fncGetPurchaseList(currentPage) {
 		$($('.ct_list_pop td.getpurchase_btn')).css('color', 'red');
 		$($('.ct_list_pop td.getpurchase_btn')).on('click', function() {
 			
-			self.location = "/purchase/getPurchase?tranNo="+$(this).children().val();
+			self.location = "/purchase/getPurchase?page=${resultPage.currentPage}&tranNo="+$(this).children().val();
 			
 		});
 		
@@ -85,7 +85,7 @@ function fncGetPurchaseList(currentPage) {
 			if($(this).text().trim() == '수정하기'){
 				
 				//alert($($(this).parent().children()[0]).text());
-				self.location = "/purchase/updatePurchaseView?tranNo="+$($(this).parent().children()[0]).children().val();
+				self.location = "/purchase/updatePurchaseView?page=${resultPage.currentPage}&tranNo="+$($(this).parent().children()[0]).children().val();
 				
 			}
 			

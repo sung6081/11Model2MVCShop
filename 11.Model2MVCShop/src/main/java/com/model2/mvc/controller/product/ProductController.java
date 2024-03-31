@@ -164,7 +164,7 @@ public class ProductController {
 		response.addCookie(cookie);
 		
 		if(request.getParameter("menu") == null) {
-			modelAndView.setViewName("/product/readProduct.jsp");
+			modelAndView.setViewName("/product/readProduct.jsp?page="+request.getParameter("page"));
 			System.out.println("getProductAction end");
 			return modelAndView;
 		}

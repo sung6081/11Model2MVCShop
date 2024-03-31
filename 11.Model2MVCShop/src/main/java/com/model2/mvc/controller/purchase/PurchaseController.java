@@ -166,7 +166,7 @@ public class PurchaseController {
 		
 		System.out.println("updatePurchaseAction start");
 		
-		ModelAndView modelAndView = new ModelAndView("/purchase/getPurchase?option=update");
+		ModelAndView modelAndView = new ModelAndView("/purchase/getPurchase?option=update&page="+request.getParameter("page"));
 		
 		Purchase purchase = new Purchase();
 		
@@ -189,11 +189,12 @@ public class PurchaseController {
 	}//end of updatePurchaseAction
 	
 	@RequestMapping("updatePurchaseView")
-	public ModelAndView updatePurchaseViewAction(@RequestParam("tranNo") int tranNo) throws Exception {
+	public ModelAndView updatePurchaseViewAction(@RequestParam("tranNo") int tranNo,
+			@RequestParam("page") String page) throws Exception {
 		
 		System.out.println("updatePurchaseViewAction start");
 		
-		ModelAndView modelAndView = new ModelAndView("/purchase/updatePurchaseView.jsp");
+		ModelAndView modelAndView = new ModelAndView("/purchase/updatePurchaseView.jsp?page="+page);
 		
 		Purchase purchase = purchaseService.getPurchase(tranNo);
 		purchase.setDivyDate(purchase.getDivyDate().split(" ")[0].replaceAll("-", ""));

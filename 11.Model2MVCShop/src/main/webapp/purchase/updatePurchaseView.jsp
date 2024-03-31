@@ -69,7 +69,7 @@ $(function() {
    	
 <div class="container">
 
-<form name="updatePurchase" method="post"	action="/purchase/updatePurchase?tranNo=${purchase.tranNo }<%-- purchaseVO.getTranNo() --%>">
+<form name="updatePurchase" method="post"	action="/purchase/updatePurchase?page=${param.page}&tranNo=${purchase.tranNo }<%-- purchaseVO.getTranNo() --%>">
 
 <table width="100%" height="37" border="0" cellpadding="0" cellspacing="0">
 	<tr>
