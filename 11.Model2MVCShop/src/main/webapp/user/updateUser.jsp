@@ -52,7 +52,7 @@
 			}
 			$("input:hidden[name='phone']").val( value );
 				
-			$("form").attr("method" , "POST").attr("action" , "/user/updateUser?option=${param.option}").submit();
+			$("form").attr("method" , "POST").attr("action" , "/user/updateUser?option=${param.option}&currentPage=${param.currentPage}").submit();
 		}
 		 $(function() {
 			

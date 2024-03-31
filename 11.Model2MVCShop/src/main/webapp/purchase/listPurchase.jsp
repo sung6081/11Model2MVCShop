@@ -81,7 +81,7 @@ HashMap<String, Object> map = (HashMap<String, Object>)request.getAttribute("map
 			
 			if($(this).text().trim() == '¹°°ÇµµÂø'){
 				
-				alert($($(this).parent().children()[0]).text());
+				alert($($(this).parent().children()[0]).children().val());
 				self.location = "/purchase/updateTranCode?tranNo="+$($(this).parent().children()[0]).children().val();
 				
 			}
@@ -183,6 +183,7 @@ HashMap<String, Object> map = (HashMap<String, Object>)request.getAttribute("map
 		<x:when test="${!empty purchase.tranCode and purchase.tranCode eq '1' }">
 			<!-- <a href="/purchase/updateTranCode?tranNo=${purchase.tranNo}<%-- purchaseVO.getTranNo() --%>&tranCode=2">¹°°ÇµµÂø</a> -->
 			¹°°ÇµµÂø
+			<input type="hidden" name="tranNo" value="${purchase.tranNo }">
 		</x:when>
 		<%-- }else if(purchaseVO.getTranCode() != null && purchaseVO.getTranCode().trim().equals("2")) { --%>
 		<%-- }else { --%>

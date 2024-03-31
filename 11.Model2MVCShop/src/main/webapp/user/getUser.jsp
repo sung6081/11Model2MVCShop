@@ -53,7 +53,7 @@
 			 $( "td.ct_btn01:contains('수정')" ).on("click" , function() {
 					//Debug..
 					//alert(  $( "td.ct_btn01:contains('수정')" ).html() );
-					self.location = "/user/updateUserView/${user.userId}?option=${param.option}"
+					self.location = "/user/updateUserView/${user.userId}?option=${param.option}&currentPage=${param.currentPage}"
 				});
 		});
 		

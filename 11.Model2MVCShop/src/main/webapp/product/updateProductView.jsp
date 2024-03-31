@@ -60,7 +60,7 @@ function fncAddProduct(){
 
 $(function() {
 	
-	alert(history);
+	//alert(history);
 	
 	$($('.ct_btn01')[0]).on('click', function() {
 		

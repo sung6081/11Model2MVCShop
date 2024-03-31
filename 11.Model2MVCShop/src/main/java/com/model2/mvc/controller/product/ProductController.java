@@ -72,7 +72,7 @@ public class ProductController {
 		product.setManuDate(multipartRequest.getParameter("manuDate").replaceAll("-", ""));
 		product.setPrice(Integer.parseInt(multipartRequest.getParameter("price")));
 		if(multipartRequest.getOriginalFileName("fileName") != null)
-			product.setFileName(multipartRequest.getOriginalFileName("fileName"));
+			product.setFileName(multipartRequest.getFilesystemName("fileName"));
 		else
 			product.setFileName("no_image.png");
 		if(multipartRequest.getParameter("category") != null && multipartRequest.getParameter("category").split("&").length == 2) {
@@ -263,7 +263,7 @@ public class ProductController {
 		product.setCateNo(multipartRequest.getParameter("category").split("&")[0]);
 		product.setCateName(multipartRequest.getParameter("category").split("&")[1]);
 		if(multipartRequest.getOriginalFileName("fileName") != null) {
-			product.setFileName(multipartRequest.getOriginalFileName("fileName"));
+			product.setFileName(multipartRequest.getFilesystemName("fileName"));
 		}
 		
 		productService.updateProduct(product);
