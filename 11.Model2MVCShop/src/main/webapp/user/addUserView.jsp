@@ -70,25 +70,38 @@
 									+ $("input[name='phone3']").val();
 			}
 			//Debug..
-			//alert("phone : "+value)
+			alert("phone : "+value)
 			$("input:hidden[name='phone']").val( value );
 			
-			$("form").attr("method" , "POST").attr("action" , "/user/addUser").submit();
+			alert("??"+$('form').html());
+			$("form[name=detailForm]").attr("method" , "POST").attr("action" , "/user/addUser").submit();
 		}
 		
 		 $(function() {
+			 
+			 $('.btn-success').css('color', 'white');
+			 $('.btn-danger').css('color', 'white');
 			
-			 $( "td.ct_btn01:contains('가입')" ).on("click" , function() {
+			 $( ".btn:contains('가입')" ).attr('href', '#');
+			 $( ".btn:contains('가입')" ).on("click" , function() {
 				//Debug..
 				//alert(  $( "td.ct_btn01:contains('가입')" ).html() );
-				fncAddUser();
+				
+				if($('span.possible').html() != ''){
+					alert('사용불가능한 아이디 입니다.');
+					$('input[name="userId"]').val('');
+					//$('input[name="userId"]').focus();
+				}else {
+					alert('addUser');
+					fncAddUser();
+				}
 			});
 		});	
 		
 		$(function() {
-			 $( "td.ct_btn01:contains('취소')" ).on("click" , function() {
+			 $( ".btn:contains('취소')" ).on("click" , function() {
 					//Debug..
-					//alert(  $( "td.ct_btn01:contains('취소')" ).html() );
+					//alert(  $( ".btn:contains('취소')" ).html() );
 					$("form")[0].reset();
 			});
 		});	
@@ -104,14 +117,45 @@
 			     }
 			});
 			 
-		});	
+		});
+		 
+		 $(function() {
+			 
+			 $('input[name=ssn]').on('change', function() {
+				 checkSsn();
+			 });
+			
+			 $('input[name="userId"]').on('keyup', function() {
+				 
+				if($('input[name="userId"]').val() == ''){
+					$('span.possible').html('');
+				}
+				
+				var userId = $('input[name="userId"]').val();
+				var url = "/app/user/checkDuplication/"+userId; 
+				
+				$.post(url, function(JSONData, status) {
+					 
+					 if(JSONData.result){
+						 $('span.possible').html('');
+					 }else{
+						 $('span.possible').html('사용 불가능한 아이디입니다.');
+					 }
+					 
+					 $('span.possible').css('color', 'red');
+					 
+				 }, "json");
+				 
+			 });
+			 
+		 });
 		
 		function checkSsn() {
 			var ssn1, ssn2; 
 			var nByear, nTyear; 
 			var today; 
 	
-			ssn = document.detailForm.ssn.value; 
+			ssn = $('input[name=ssn]').val(); 
 			if(!PortalJuminCheck(ssn)) {
 				alert("잘못된 주민번호입니다.");
 				return false;
@@ -134,17 +178,6 @@
 			var mod = sum % 11;
 			return ((11 - mod) % 10 == last) ? true : false;
 		}
-		
-		 $(function() {	
-			 $("td.ct_btn:contains('ID중복확인')").on("click" , function() {
-				//alert($("td.ct_btn:contains('ID중복확인')").html());
-				popWin 
-				= window.open("/user/checkDuplication.jsp",
-											"popWin", 
-											"left=300,top=200,width=300,height=200,marginwidth=0,marginheight=0,"+
-											"scrollbars=no,scrolling=no,menubar=no,resizable=no");
-			});
-		});	
 
 	</script>		
 	
@@ -160,219 +193,121 @@
 <!-- ////////////////// jQuery Event 처리로 변경됨 ///////////////////////// 
 <form name="detailForm"  method="post" >
 ////////////////////////////////////////////////////////////////////////////////////////////////// -->
-<form name="detailForm">
+<form name="detailForm" method="post" action="/user/addUser">
 
-<table width="100%" height="37" border="0" cellpadding="0"	cellspacing="0">
-	<tr>
-		<td width="15" height="37">
-			<img src="/images/ct_ttl_img01.gif" width="15" height="37"/>
-		</td>
-		<td background="/images/ct_ttl_img02.gif" width="100%" style="padding-left:10px;">
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="93%" class="ct_ttl01">회원가입</td>
-					<td width="20%" align="right">&nbsp;</td>
-				</tr>
-			</table>
-		</td>
-		<td width="12" height="37">
-			<img src="/images/ct_ttl_img03.gif" width="12" height="37"/>
-		</td>
-	</tr>
-</table>
+<!-- <div class="row"> -->
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0" style="margin-top:13px;">
-	
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	
-	<tr>
-		<td width="104" class="ct_write">
-			아이디 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<table width="100%" border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="105">
-						<input 	type="text" name="userId" class="ct_input_bg" 
-										style="width:100px; height:19px"  maxLength="20" >
-					</td>
-					<td>
-						<table border="0" cellspacing="0" cellpadding="0">
-							<tr>
-								<td width="4" height="21">
-									<img src="/images/ct_btng01.gif" width="4" height="21"/>
-								</td>
-								<td align="center" background="/images/ct_btng02.gif" class="ct_btn" style="padding-top:3px;">
-									 ID중복확인
-								</td>
-								<td width="4" height="21">
-									<img src="/images/ct_btng03.gif" width="4" height="21"/>
-								</td>
-							</tr>
-						</table>
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-	
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	
-	<tr>
-		<td width="104" class="ct_write">
-			비밀번호 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<input 	type="password" name="password" class="ct_input_g" 
-							style="width:100px; height:19px"  maxLength="10" minLength="6"  />
-		</td>
-	</tr>
-	
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	
-	<tr>
-		<td width="104" class="ct_write">
-			비밀번호 확인 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<input 	type="password" name="password2" class="ct_input_g" 
-							style="width:100px; height:19px"  maxLength="10" minLength="6"  />
-		</td>
-	</tr>
-	
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	
-	<tr>
-		<td width="104" class="ct_write">
-			이름 <img src="/images/ct_icon_red.gif" width="3" height="3" align="absmiddle"/>
-		</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<input 	type="text" name="userName" class="ct_input_g" 
-							style="width:100px; height:19px"  maxLength="50" />
-		</td>
-	</tr>
-	
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
-	
-	<tr>
-		<td width="104" class="ct_write">주민번호</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<input 	type="text" name="ssn" class="ct_input_g" style="width:100px; height:19px" 
-							onChange="javascript:checkSsn();"  maxLength="13" />
-			-제외, 13자리 입력
-		</td>
-	</tr>
+	<div class="container">
+		<h3 >회원가입</h3>
+	</div>
 
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
+	<div class="container">
+		아이디 <span class="possible" ></span>
+		<div class="input-group">
+		  <span class="input-group-addon" id="basic-addon1">
+		  	<span class="glyphicon glyphicon-user"></span>
+		  </span>
+		  <input type="text" class="form-control" placeholder="아이디" aria-describedby="basic-addon1" name="userId" >
+		</div>
+	</div>
 	
-	<tr>
-		<td width="104" class="ct_write">주소</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<input		type="text" name="addr" class="ct_input_g" 
-						 	style="width:370px; height:19px"  maxLength="100"/>
-		</td>
-	</tr>
+	<div class="container">
+		비밀번호
+		<div class="input-group">
+		  <span class="input-group-addon" id="basic-addon1">
+		  	<span class="glyphicon glyphicon-remove"></span>
+		  </span>
+		  <input type="password" class="form-control" placeholder="비밀번호" aria-describedby="basic-addon1" name="password" >
+		</div>
+	</div>
 	
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
+	<div class="container">
+		비밀번호 확인
+		<div class="input-group">
+		  <span class="input-group-addon" id="basic-addon1">
+		  	<span class="glyphicon glyphicon-remove"></span>
+		  </span>
+		  <input type="password" class="form-control" placeholder="비밀번호 확인" aria-describedby="basic-addon1" name="password2" >
+		</div>
+	</div>
 	
-	<tr>
-		<td width="104" class="ct_write">휴대전화번호</td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<select 	name="phone1" class="ct_input_g" style="width:50px; height:25px"
-							onChange="document.detailForm.phone2.focus();">
-				<option value="010" >010</option>
-				<option value="011" >011</option>
-				<option value="016" >016</option>
-				<option value="018" >018</option>
-				<option value="019" >019</option>
-			</select>
-			<input 	type="text" name="phone2" class="ct_input_g" 
-							style="width:100px; height:19px"  maxLength="9" />
-			- 
-			<input 	type="text" name="phone3" class="ct_input_g" 
-							style="width:100px; height:19px"  maxLength="9" />
-			<input type="hidden" name="phone" class="ct_input_g"  />
-		</td>
-	</tr>
-
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
+	<div class="container">
+		이름
+		<div class="input-group">
+		  <span class="input-group-addon" id="basic-addon1">
+		  	<span class="glyphicon glyphicon-user"></span>
+		  </span>
+		  <input type="text" class="form-control" placeholder="이름" aria-describedby="basic-addon1" name="userName" >
+		</div>
+	</div>
 	
-	<tr>
-		<td width="104" class="ct_write">이메일 </td>
-		<td bgcolor="D6D6D6" width="1"></td>
-		<td class="ct_write01">
-			<table border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td height="26">
- 						<input 	type="text" name="email" class="ct_input_g" 
-										style="width:100px; height:19px" />										
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-
-	<tr>
-		<td height="1" colspan="3" bgcolor="D6D6D6"></td>
-	</tr>
+	<div class="container">
+		주민번호
+		<div class="input-group">
+		  <span class="input-group-addon" id="basic-addon1">
+		  	<span class="glyphicon glyphicon-user"></span>
+		  </span>
+		  <input type="text" class="form-control" placeholder="주민번호" aria-describedby="basic-addon1" name="ssn" maxLength="13" >
+		</div>
+	</div>
 	
-</table>
+	<div class="container">
+		주소
+		<div class="input-group">
+		 <span class="input-group-addon" id="basic-addon1">
+		  	<span class="glyphicon glyphicon-home"></span>
+		  </span>
+		  <input type="text" class="form-control" placeholder="주소" aria-describedby="basic-addon1" name="addr" >
+		</div>
+	</div>
+	
+	<div class="container">
+	<div class="row">
+	
+	<div class="col-xs-2">
+		휴대폰 번호
+		<div class="input-group">
+		  <span class="input-group-addon" id="basic-addon1">
+		  	<span class="glyphicon glyphicon-phone"></span>
+		  </span>
+		  <select class="form-control" aria-describedby="basic-addon1" name="phone1" >
+		  	<option value="010" >010</option>
+		  	<option value="011" >011</option>
+			<option value="016" >016</option>
+			<option value="018" >018</option>
+			<option value="019" >019</option>
+		  </select>
+		</div>
+	</div>
+	<br/>
+	<div class="col-xs-4">
+		<input type="text" class="form-control" name="phone2" maxLength="4" >
+	</div>
+	<div class="col-xs-4">
+		<input type="text" class="form-control" name="phone3" maxLength="4" >
+	</div>
+	
+	</div>
+	</div>
+	
+	<div class="container">
+		이메일
+		<div class="input-group">
+		  <span class="input-group-addon" id="basic-addon1">
+		  	@
+		  </span>
+		  <input type="text" class="form-control" placeholder="이메일" aria-describedby="basic-addon1" name="email" >
+		</div>
+	</div>
 
-<table width="100%" border="0" cellspacing="0" cellpadding="0"	style="margin-top:10px;">
-	<tr>
-		<td width="53%">	</td>
+	<br/>
+	<div class="container" style="text-align:center">
+		<a href="#" class="btn btn-success">가입</a>
+		<a href="#" class="btn btn-danger">취소</a>
+	</div>
 
-		<td align="right">
-			<table border="0" cellspacing="0" cellpadding="0">
-				<tr>
-					<td width="17" height="23">
-						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
-					</td>
-					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						가입
-					</td>
-					<td width="14" height="23">
-						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
-					</td>
-					<td width="30"></td>					
-					<td width="17" height="23">
-						<img src="/images/ct_btnbg01.gif" width="17" height="23"/>
-					</td>
-					<td background="/images/ct_btnbg02.gif" class="ct_btn01" style="padding-top:3px;">
-						취소
-					</td>
-					<td width="14" height="23">
-						<img src="/images/ct_btnbg03.gif" width="14" height="23"/>
-					</td>
-				</tr>
-			</table>
-		</td>
-	</tr>
-</table>
-
+<!-- </div> -->
+	
 </form>
 
 </div>

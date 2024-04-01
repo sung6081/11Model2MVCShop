@@ -83,8 +83,8 @@ $(function() {
 	$('img[height="15"]').on('click', function() {
 		
 		//alert($('input[name="manuDate"]').parent().html());
-		show_calendar('document.detailForm.manuDate', $('input[name="manuDate"]').val());
-		//show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value);
+		//show_calendar('document.detailForm.manuDate', $('input[name="manuDate"]').val());
+		show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value);
 	});
 	
 });

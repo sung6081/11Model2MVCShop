@@ -141,6 +141,10 @@ public class UserController {
 		//Business Logic
 		User dbUser=userService.getUser(user.getUserId());
 		
+		if(dbUser == null) {
+			return "redirect:/index.jsp";
+		}
+		
 		if( user.getPassword().equals(dbUser.getPassword())){
 			session.setAttribute("user", dbUser);
 		}
